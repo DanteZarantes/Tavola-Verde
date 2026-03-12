@@ -1,11 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useAuth } from '@/lib/AuthContext';
 import { User, Mail, Phone, LogOut, Lock } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 
-export default function ProfilePage() {
+function ProfileContent() {
   const { user, login, register, logout, updateProfile } = useAuth();
+  const searchParams = useSearchParams();
+  const redirectParams = searchParams.get('redirect');
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [formData, setFormData] = useState({
     name: '',
@@ -19,10 +22,18 @@ export default function ProfilePage() {
     e.preventDefault();
     if (mode === 'login') {
       const success = login(formData.email, formData.password);
-      if (!success) alert('Неверный email или пароль');
+      if (!success) {
+        alert('Неверный email или пароль');
+      } else if (redirectParams) {
+        window.location.href = redirectParams;
+      }
     } else {
       const success = register(formData);
-      if (!success) alert('Пользователь с таким email уже существует');
+      if (!success) {
+        alert('Пользователь с таким email уже существует');
+      } else if (redirectParams) {
+        window.location.href = redirectParams;
+      }
     }
   };
 
@@ -304,5 +315,13 @@ export default function ProfilePage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function ProfilePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-primary-darker" />}>
+      <ProfileContent />
+    </Suspense>
   );
 }

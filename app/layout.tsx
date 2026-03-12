@@ -2,7 +2,9 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { CartProvider } from '@/lib/CartContext'
 import { AuthProvider } from '@/lib/AuthContext'
+import { OrderProvider } from '@/lib/OrderContext'
 import Header from '@/components/Header'
+import PageTransition from '@/components/PageTransition'
 
 export const metadata: Metadata = {
   title: 'Tavola Verde - Ресторан',
@@ -18,10 +20,14 @@ export default function RootLayout({
     <html lang="ru">
       <body>
         <AuthProvider>
-          <CartProvider>
-            <Header />
-            {children}
-          </CartProvider>
+          <OrderProvider>
+            <CartProvider>
+              <Header />
+              <PageTransition>
+                {children}
+              </PageTransition>
+            </CartProvider>
+          </OrderProvider>
         </AuthProvider>
       </body>
     </html>

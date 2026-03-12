@@ -8,6 +8,10 @@ interface User {
   phone: string;
 }
 
+interface FullUser extends User {
+  password: string;
+}
+
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => boolean;
@@ -28,9 +32,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = (email: string, password: string) => {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const found = users.find((u: any) => u.email === email && u.password === password);
+    const found = users.find((u: FullUser) => u.email === email && u.password === password);
     if (found) {
-      const { password, ...userData } = found;
+      const { password: _password, ...userData } = found;
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
       return true;
@@ -38,12 +42,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return false;
   };
 
-  const register = (newUser: User & { password: string }) => {
+  const register = (newUser: FullUser) => {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    if (users.find((u: any) => u.email === newUser.email)) return false;
+    if (users.find((u: FullUser) => u.email === newUser.email)) return false;
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
-    const { password, ...userData } = newUser;
+    const { password: _password, ...userData } = newUser;
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
     return true;
@@ -58,7 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(updatedUser);
     localStorage.setItem('user', JSON.stringify(updatedUser));
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const updated = users.map((u: any) => u.email === updatedUser.email ? { ...u, ...updatedUser } : u);
+    const updated = users.map((u: FullUser) => u.email === updatedUser.email ? { ...u, ...updatedUser } : u);
     localStorage.setItem('users', JSON.stringify(updated));
   };
 
