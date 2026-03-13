@@ -53,8 +53,8 @@ export default function AuthPage() {
     <main className="min-h-screen bg-primary-darker flex flex-col justify-center items-center p-4 relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/10 rounded-full blur-[100px] animate-pulse-slow"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-light/20 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-light/20 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
       <div className="w-full max-w-md relative z-10 animate-fadeIn">
@@ -96,8 +96,8 @@ export default function AuthPage() {
           </div>
 
           {error && (
-            <div className="bg-accent/20 border border-accent/50 text-accent-light px-4 py-3 rounded-xl mb-6 text-sm flex items-center gap-2 animate-scaleIn">
-              <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></div>
+            <div className="bg-red-500/20 border border-red-500/50 text-red-400 px-4 py-3 rounded-xl mb-6 text-sm flex items-center gap-2 animate-scaleIn">
+              <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></div>
               {error}
             </div>
           )}

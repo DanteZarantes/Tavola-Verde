@@ -13,7 +13,6 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    // Small delay to allow localStorage auth state to initialize
     const timer = setTimeout(() => {
       setIsChecking(false);
     }, 500);

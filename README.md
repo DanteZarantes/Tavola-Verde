@@ -1,72 +1,173 @@
-# Tavola Verde - Restaurant Website
+# Tavola Verde - Ресторан
 
-Modern restaurant website built with Next.js, React, and TypeScript featuring an online menu, shopping cart, and user profile system.
+Современный веб-сайт ресторана, созданный с использованием Next.js, React и TypeScript с системой профилей, онлайн-меню и корзиной покупок.
 
-## Features
+## ✨ Особенности
 
-- 🍽️ **Online Menu** - Browse through categorized menu items
-- 🛒 **Shopping Cart** - Add items to cart with quantity management
-- 👤 **User Profiles** - Register, login, and manage your profile
-- 📱 **Responsive Design** - Works on all devices
-- 🎨 **Modern UI** - Clean and elegant design with custom color scheme
+- 🍽️ **Онлайн меню** - Просмотр блюд по категориям с поиском
+- 🛒 **Корзина покупок** - Управление количеством товаров
+- 👤 **Система профилей** - Регистрация, вход и управление профилем
+- 📦 **Отслеживание заказов** - Просмотр статуса заказов в реальном времени
+- 📱 **Адаптивный дизайн** - Работает на всех устройствах
+- 🎨 **Современный UI** - Элегантный дизайн с анимациями
+- 🌐 **Полностью на русском языке**
 
-## Getting Started
+## 🚀 Начало работы
 
-### Installation
+### Установка
 
-1. Install dependencies:
+1. Установите зависимости:
 ```bash
 npm install
 ```
 
-2. Run the development server:
+2. Запустите сервер разработки:
 ```bash
 npm run dev
 ```
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser
+3. Откройте [http://localhost:3000](http://localhost:3000) в браузере
 
-## Project Structure
+## 📁 Структура проекта
 
 ```
 tavola-verde/
 ├── app/
-│   ├── menu/          # Menu page
-│   ├── cart/          # Shopping cart page
-│   ├── profile/       # User profile page
-│   ├── layout.tsx     # Root layout
-│   ├── page.tsx       # Home page
-│   └── globals.css    # Global styles
+│   ├── about/         # Страница "О нас"
+│   ├── auth/          # Страница авторизации
+│   ├── cart/          # Корзина покупок
+│   ├── menu/          # Страница меню
+│   ├── orders/        # Отслеживание заказов
+│   ├── profile/       # Профиль пользователя
+│   ├── layout.tsx     # Корневой layout
+│   ├── page.tsx       # Главная страница
+│   └── globals.css    # Глобальные стили
 ├── components/
-│   └── Header.tsx     # Navigation header
+│   ├── AuthGuard.tsx  # Защита маршрутов
+│   └── Header.tsx     # Навигационный header
 ├── lib/
-│   ├── menuData.ts    # Menu items data
-│   ├── CartContext.tsx # Cart state management
-│   └── AuthContext.tsx # Authentication state
+│   ├── menuData.ts    # Данные меню
+│   ├── CartContext.tsx # Управление корзиной
+│   ├── AuthContext.tsx # Управление авторизацией
+│   └── OrderContext.tsx # Управление заказами
 └── package.json
 ```
 
-## Technologies Used
+## 🎨 Технологии
 
-- **Next.js 14** - React framework
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-- **Lucide React** - Icons
-- **Context API** - State management
+- **Next.js 14** - React фреймворк
+- **TypeScript** - Типизация
+- **Tailwind CSS** - Стилизация
+- **Lucide React** - Иконки
+- **Context API** - Управление состоянием
 
-## Color Scheme
+## 🎨 Цветовая схема
 
-- Primary: `#1E4D4D` (Dark teal)
-- Gold: `#D4AF37` (Gold accent)
-- Cream: `#E8D5B7` (Light background)
+- Primary: `#1E4D4D` (Темный бирюзовый)
+- Gold: `#D4AF37` (Золотой акцент)
+- Cream: `#E8D5B7` (Светлый фон)
+- Primary Darker: `#0a1a16` (Темный фон)
 
-## Available Scripts
+## 📄 Страницы
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint
+### Главная страница (/)
+- Героический раздел с анимациями
+- Преимущества ресторана
+- Специальные предложения (Ифтар меню)
+- Призыв к действию
 
-## License
+### Меню (/menu)
+- Фильтрация по категориям
+- Поиск блюд
+- Добавление в корзину с анимацией
+- Популярные блюда
 
-Private project for Tavola Verde restaurant.
+### Корзина (/cart)
+- Управление количеством
+- Расчет доставки (бесплатно от 5000₸)
+- Скидка 10% при заказе от 10000₸
+- Оформление заказа
+
+### Заказы (/orders)
+- Список всех заказов
+- Отслеживание статуса
+- Прогресс-бар доставки
+- Детали заказа
+
+### О нас (/about)
+- История ресторана
+- Ценности компании
+- Контактная информация
+- Часы работы
+
+### Профиль (/profile)
+- Вход и регистрация
+- Редактирование профиля
+- Информация пользователя
+
+## 🎭 Анимации
+
+- **fadeIn** - Плавное появление
+- **slideIn** - Скольжение слева
+- **scaleIn** - Масштабирование
+- **float** - Плавающий эффект
+- **shimmer** - Мерцание
+- **pulse** - Пульсация
+- **bounce** - Подпрыгивание
+
+## 💾 Хранение данных
+
+Проект использует localStorage для:
+- Данных пользователя
+- Корзины покупок
+- Истории заказов
+
+## 🔒 Защита маршрутов
+
+Страница заказов защищена компонентом AuthGuard - требуется авторизация для доступа.
+
+## 📱 Адаптивность
+
+- Мобильное меню
+- Адаптивная сетка
+- Оптимизированные изображения
+- Touch-friendly интерфейс
+
+## 🎯 Доступные скрипты
+
+- `npm run dev` - Запуск сервера разработки
+- `npm run build` - Сборка для продакшена
+- `npm start` - Запуск продакшен сервера
+- `npm run lint` - Запуск ESLint
+
+## 📝 Лицензия
+
+Частный проект для ресторана Tavola Verde.
+
+## 🌟 Особенности дизайна
+
+- Стеклянный морфизм (glass morphism)
+- Градиентные фоны
+- Анимированные переходы
+- Эффекты при наведении
+- Плавная прокрутка
+- Кастомный скроллбар
+- Золотые акценты
+- Темная тема
+
+## 🍽️ Меню включает
+
+- Ифтар меню (3 сета)
+- Пасты (6 видов)
+- Пицца (5 видов)
+- Бургеры (2 вида)
+- Гарниры (4 вида)
+- Закуски (4 вида)
+- Завтраки (7 видов)
+- Кофе (10 видов)
+- Чай (15 видов)
+- Лимонады (11 видов)
+- Фреши (4 вида)
+- Смузи (5 видов)
+
+Всего более 80 позиций в меню!

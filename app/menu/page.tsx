@@ -3,16 +3,19 @@
 import { useState } from 'react';
 import { menuData, categories } from '@/lib/menuData';
 import { useCart } from '@/lib/CartContext';
-import { Plus, Check, Search, Sparkles } from 'lucide-react';
+import { Plus, Check, Search, Sparkles, Filter, TrendingUp } from 'lucide-react';
 
 export default function MenuPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [addedItems, setAddedItems] = useState<Set<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState('');
   const { addToCart } = useCart();
 
-  const filteredItems = selectedCategory === 'all' 
-    ? menuData 
-    : menuData.filter(item => item.category === selectedCategory);
+  const filteredItems = menuData.filter(item => {
+    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   const handleAddToCart = (item: any) => {
     addToCart(item);
@@ -35,7 +38,7 @@ export default function MenuPage() {
         </div>
         
         <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
-          <Sparkles className="text-gold mx-auto mb-4 w-8 h-8 opacity-80 animate-pulse-slow" />
+          <Sparkles className="text-gold mx-auto mb-4 w-8 h-8 opacity-80 animate-pulse" />
           <h1 className="text-5xl md:text-7xl font-bold font-serif mb-6 text-cream-light drop-shadow-xl animate-fadeIn">
             Наше <span className="gradient-text-gold">Меню</span>
           </h1>
@@ -46,8 +49,22 @@ export default function MenuPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-12">
+        {/* Search Bar */}
+        <div className="mb-8 animate-scaleIn">
+          <div className="max-w-2xl mx-auto relative">
+            <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 text-gold/60" size={20} />
+            <input
+              type="text"
+              placeholder="Поиск блюд..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-14 pr-6 py-4 bg-primary-dark/50 border border-gold/20 rounded-2xl text-cream placeholder:text-cream/40 focus:outline-none focus:border-gold/50 focus:ring-2 focus:ring-gold/20 transition-all"
+            />
+          </div>
+        </div>
+
         {/* Category Filter */}
-        <div className="mb-16 sticky top-[88px] z-40">
+        <div className="mb-16 sticky top-[88px] z-40 animate-slideIn">
           <div className="glass-panel p-2 md:p-3 rounded-2xl mx-auto w-fit max-w-full overflow-x-auto shadow-glow-primary scrollbar-hide border border-gold/20">
             <div className="flex gap-2 min-w-max">
               <button
@@ -58,7 +75,8 @@ export default function MenuPage() {
                     : 'text-cream/80 hover:text-gold hover:bg-gold/10'
                 }`}
               >
-                Все
+                <Filter size={16} />
+                Все блюда
               </button>
               {categories.map(cat => (
                 <button
@@ -77,6 +95,15 @@ export default function MenuPage() {
           </div>
         </div>
 
+        {/* Results Count */}
+        {searchQuery && (
+          <div className="mb-8 text-center animate-fadeIn">
+            <p className="text-cream/60">
+              Найдено <span className="text-gold font-bold">{filteredItems.length}</span> блюд
+            </p>
+          </div>
+        )}
+
         {/* Menu Items Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
           {filteredItems.map((item, index) => (
@@ -94,10 +121,20 @@ export default function MenuPage() {
                 
                 {/* Decorative Pattern inside card top */}
                 <div className="absolute top-4 right-4 z-20">
-                  <div className="w-12 h-12 rounded-full glass-panel border border-gold/30 flex items-center justify-center backdrop-blur-3xl">
+                  <div className="w-12 h-12 rounded-full glass-panel border border-gold/30 flex items-center justify-center backdrop-blur-3xl group-hover:rotate-180 transition-transform duration-700">
                     <Sparkles size={20} className="text-gold animate-pulse" />
                   </div>
                 </div>
+
+                {/* Popular Badge */}
+                {index < 3 && (
+                  <div className="absolute top-4 left-4 z-20">
+                    <div className="px-4 py-2 rounded-full bg-gold/90 backdrop-blur-xl flex items-center gap-2 animate-pulse">
+                      <TrendingUp size={14} className="text-primary-darker" />
+                      <span className="text-xs font-bold text-primary-darker uppercase tracking-wider">Популярное</span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="relative z-10 p-8 flex-grow flex flex-col justify-between -mt-10">
@@ -110,6 +147,11 @@ export default function MenuPage() {
                       <span className="text-gold font-bold text-xl whitespace-nowrap tracking-wide drop-shadow-lg">
                         {item.price} ₸
                       </span>
+                      {item.price2 && (
+                        <div className="text-gold/70 font-semibold text-sm mt-1">
+                          {item.price2} ₸
+                        </div>
+                      )}
                     </div>
                   </div>
                   
@@ -131,13 +173,13 @@ export default function MenuPage() {
                   >
                     {addedItems.has(item.id) ? (
                       <>
-                        <Check size={20} />
-                        <span>In Cart</span>
+                        <Check size={20} className="animate-bounce" />
+                        <span>В корзине</span>
                       </>
                     ) : (
                       <>
                         <Plus size={20} className="group-hover/btn:rotate-90 transition-transform duration-500" />
-                        <span>Add to Selection</span>
+                        <span>Добавить</span>
                       </>
                     )}
                   </button>
@@ -155,7 +197,7 @@ export default function MenuPage() {
           <div className="text-center py-32 px-4 glass-card rounded-[3rem] max-w-2xl mx-auto mt-12 animate-scaleIn">
             <Search className="w-16 h-16 text-gold/50 mx-auto mb-6" />
             <p className="text-2xl font-serif text-cream-light mb-2">Ничего не найдено</p>
-            <p className="text-cream/50 font-light">Попробуйте выбрать другую категорию</p>
+            <p className="text-cream/50 font-light">Попробуйте изменить параметры поиска или выбрать другую категорию</p>
           </div>
         )}
       </div>

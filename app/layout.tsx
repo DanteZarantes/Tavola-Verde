@@ -4,7 +4,6 @@ import { CartProvider } from '@/lib/CartContext'
 import { AuthProvider } from '@/lib/AuthContext'
 import { OrderProvider } from '@/lib/OrderContext'
 import Header from '@/components/Header'
-import PageTransition from '@/components/PageTransition'
 
 export const metadata: Metadata = {
   title: 'Tavola Verde - Ресторан',
@@ -23,9 +22,7 @@ export default function RootLayout({
           <OrderProvider>
             <CartProvider>
               <Header />
-              <PageTransition>
-                {children}
-              </PageTransition>
+              {children}
             </CartProvider>
           </OrderProvider>
         </AuthProvider>
